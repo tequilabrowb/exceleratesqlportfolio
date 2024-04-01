@@ -1,0 +1,151 @@
+/*Our content team is reviewing content that is currently available on both Netflix and Hulu and in need of the following: Content title, year of release, and if the title is on Netflix and Hulu*/
+select title, 
+year,
+netflix,
+hulu
+from streaming_shows
+
+/*Our content engagement team is looking into adding an option for our subscribers to start selecting which content to watch based on their IMDb scores. May you return a list of titles based on their imdB scores? Sort the scores from highest to lowest*/
+select title,
+imdb
+from streaming_shows
+order by imdb desc
+
+/*	Sorry about this……this will need to be censored based on age restrictions. So, may you also add in the appropriate viewing audience age as well? We will now need this to be sorted by age from the youngest age viewing allowance to the oldest, then by the IMDb scores from highest to lowest. Thanks! */
+select title,
+imdb,
+rating
+from streaming_shows
+order by rating asc, imdb desc
+
+/*	We now need the same information for Rotten Tomatoes as well but instead of the age, we will need the following: Content titles, their year of release, and their Rotten Tomatoes score. Sort by the year of release from newest to oldest and their Rotten Tomatoes score from smallest to largest. */ 
+select title,
+year,
+rotten_tomatoes
+from streaming_shows
+order by year desc, rotten_tomatoes asc
+
+/*	Finance needs a list of our mobile and non-basic plans pricing for each country prior to the end of the day. We want to see the countries with the cheapest premium plans listed first. */
+select country,
+code,
+mobile_usd,
+standard_usd,
+premium_usd
+from netflix_prices
+order by premium_usd asc
+
+/*	Hey…..just left a meeting with the paid subscription team. They are currently in talks to start a paid social media engagement initiative with a few selected subscribers that will kick off in the next 30 days. They need a few data points to get started. May you provide them with the following:
+●	a list of our users
+●	their join date
+●	their current plan
+●	the primary device used to watch Netflix
+They really want to focus on the users who have had an account the longest first, so please be sure that these users are at the top of the list when you do provide them with this information. */
+select user_id,
+join_date,
+subscription_type,
+primary_device
+from userbase
+order by join_date asc
+
+/*	We have been taking a hit on revenue in the last few months and possibly hinting at price increases. Can you provide finance with a list of all users along with their selected plan and billing for each month? It would be great if you could sort the data by plan (you can sort by any way of your choice), then by cost from largest to smallest. */
+select user_id,
+subscription_type,
+monthly_revenue
+from userbase
+order by subscription_type asc, monthly_revenue desc
+
+/*	The content engagement team is going to potentially scale back their original plans. They may just pitch a new rollout that shows the top 10 IMDb and Rotten Tomatoes rated movies. May you provide the top 10 IMDb and Rotten Tomatoes rated movies? */
+select title,
+imdb
+from streaming_shows
+order by imdb desc
+limit 10
+
+select title,
+rotten_tomatoes
+from streaming_shows
+order by rotten_tomatoes desc
+limit 10
+
+/*	Now, I am just curious as a Rotten Tomatoes avid user, what are the lowest 10 Rotten Tomatoes rated movies? */
+select title,
+rotten_tomatoes
+from streaming_shows
+order by rotten_tomatoes asc
+limit 10
+
+/*	Our content team is reviewing our storage capacity, which is nearing its limit due to storage and licensing costs. May you pull the 2 countries that have the largest amount of TV content on Netflix along with their costs for each plan level? */
+select country,
+no_of_tv_shows,
+basic_cost_per_month,
+standard_cost_per_month,
+premium_cost_per_month
+from netflix_countries
+order by no_of_tv_shows desc
+limit 2
+
+/*	The finance team is currently running various pricing models to propose another price increase in our low-priced market. Which 5 countries have the cheapest premium plan? */
+Option 1:
+select country,
+premium_cost_per_month
+from netflix_countries
+order by premium_cost_per_month asc
+limit 5
+
+/*	Which 5 countries have the smallest amount of movie content on Netflix? */
+select country,
+no_of_movies
+from netflix_countries
+order by no_of_movies asc
+limit 5
+
+/*	Which 3 countries give our customers the least pricing buying power in terms of the conversion rate? */
+select country,
+code,
+currency,
+conversion
+from netflix_prices
+order by conversion desc
+limit 3
+
+/*	Just got out of a meeting with the licensing department and they are in need of the top 3 longest movies. Can you provide?*/
+select title,
+type,
+duration
+from titles
+where type = 'Movie'
+order by duration desc
+limit 3
+
+Are you able to pull a list of all tv shows on Netflix for the Content Direct before the end of day? Be sure to properly sort by the show’s title from A to Z to make it easier for her to review. Thanks! */
+select title
+from streaming_shows
+where netflix = 1
+order by title asc
+
+/*	Need this ASAP…..Marketing just informed me that there is a new challenge on social media where TikTokers are ranking the best 10 shows on Netflix based on scores from different review sites. They are wanting for you to pull the top 10 rated shows on Netflix based on IMDb scores so they can become part of the challenge*/
+select title,
+imdb
+from streaming_shows
+where netflix = 1
+order by imdb desc
+limit 10
+
+/*	 To follow up on the last email, can you also provide which 10 Hulu shows have the lowest IMDb ratings as well? Thanks!*/
+select title,
+imdb
+from streaming_shows
+where hulu = 1
+order by imdb asc
+limit 10
+
+/*The VP of content wants to know all titles that were released in 2020. Can you provide? Be sure to sort the title as well from A to Z*/
+select title
+from titles
+where release_year = 2020
+order by title asc
+
+/* The strategy team is doing some analysis on our non-mobile users. When you get a chance, may you provide their analyst with a list of subscribers whose primary device is non mobile?*/
+select user_id
+from userbase
+where primary_device = 'Smart TV'
